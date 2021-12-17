@@ -59,7 +59,7 @@ tree * delete_node(tree *root,int key)
     if(root==NULL)
     {   return NULL;        }
     
-    if(root->left==NULL && root->right==NULL)
+    if((root->data == key) && root->left==NULL && root->right==NULL)
     {
         free(root);
         return NULL;
