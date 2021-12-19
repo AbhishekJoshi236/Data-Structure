@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+
 typedef struct tree_info
 {
     int data;
@@ -17,6 +18,7 @@ tree* insertnode(tree* root,int item)
         newnode->left=NULL;
         newnode->right=NULL;
         root=newnode;
+
     }
     else
     {
@@ -25,19 +27,20 @@ tree* insertnode(tree* root,int item)
         else
             root->right=insertnode(root->right,item);
     }
-  
     return root;
 } 
 
 
 void inorderdisplay(tree*root)
 {
+    
     if(root!=NULL)
     {
         inorderdisplay(root->left);
         printf("%d ",root->data);
         inorderdisplay(root->right);
     }
+    
 }
 
 
@@ -57,14 +60,8 @@ tree * delete_node(tree *root,int key)
     tree *suc;
 
     if(root==NULL)
-    {   return NULL;        }
-    
-    if((root->data == key) && root->left==NULL && root->right==NULL)
-    {
-        free(root);
-        return NULL;
-    }
-  
+        return NULL;        
+
     if(key< root->data)
     {
         root->left=delete_node(root->left,key);
@@ -75,6 +72,18 @@ tree * delete_node(tree *root,int key)
     }
     else
     {
+        if(root->right==NULL)
+        {
+            root=root->left;
+            printf("\nNEW VALUE AT DELETED POSITION: %d",root->data);
+            return root;
+        }
+        if(root->left==NULL)
+        {
+            root=root->right;
+            printf("\nNEW VALUE AT DELETED POSITION: %d",root->data);
+            return root; 
+        }    
         suc=successor(root);
         root->data=suc->data;
         printf("\nNEW VALUE AT DELETED POSITION: %d",root->data);
