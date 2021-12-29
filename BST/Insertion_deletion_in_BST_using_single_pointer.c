@@ -57,7 +57,7 @@ tree* successor(tree *root)
 
 tree * delete_node(tree *root,int key)
 {
-    tree *suc;
+    tree *suc=NULL;
 
     if(root==NULL)
         return NULL;        
