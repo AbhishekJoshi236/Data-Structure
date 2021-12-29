@@ -75,20 +75,17 @@ tree * delete_node(tree *root,int key)
         if(root->right==NULL)
         {
            tree* temp =root->left;
-            printf("\nNEW VALUE AT DELETED POSITION: %d",temp->data);
             free (root);
             return temp;
         }
         if(root->left==NULL)
         {
             tree * temp =root->right;
-            printf("\nNEW VALUE AT DELETED POSITION: %d",temp->data);
             free(root);
             return temp; 
         }    
         suc=successor(root);
         root->data=suc->data;
-        printf("\nNEW VALUE AT DELETED POSITION: %d",root->data);
         root->right=delete_node(root->right,suc->data);
     }
 
