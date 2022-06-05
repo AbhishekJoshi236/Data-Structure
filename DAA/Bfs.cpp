@@ -45,10 +45,10 @@ int main()
 
     vector<bool> vis(v+1);
     queue<int> q;
-    // for(int i=0;i<v;i++)
-    // {
-    //     if(!vis[i])
+    for(int i=0;i<v;i++)
+    {
+         if(!vis[i])
             bfs(1,adj,vis,q);
-    // }
+    }
     return 0;
 }
