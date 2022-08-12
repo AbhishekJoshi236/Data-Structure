@@ -1,0 +1,74 @@
+[THIS PROGRAM WILL RETURN THE TOTAL NUMBER OF CONNECTED COMPONENTS PRESENT IN GRAPH.]
+[KOSARAJU's ALGORITHM]
+
+#include <bits/stdc++.h>
+
+void topoDfs(int node, stack<int> &st, vector<bool> &vis, unordered_map <int,list<int>> &adj )
+{
+    vis[node] = true;
+    for(auto nbr: adj[node])
+    {
+        if(!vis[nbr])
+            topoDfs(nbr,st,vis,adj);
+    }
+    st.push(node);
+}
+void Dfs(int node, vector<bool> &vis, unordered_map <int,list<int>> &adj )
+{
+    vis[node] = true;
+    for(auto nbr: adj[node])
+    {
+        if(!vis[nbr])
+            Dfs(nbr,vis,adj);
+    }
+}
+int stronglyConnectedComponents(int v, vector<vector<int>> &edges)
+{
+	// Write your code here.
+    
+    //making adj list
+    unordered_map <int,list<int>> adj;
+    for(int i=0;i<edges.size();i++)
+    {
+        int u = edges[i][0];
+        int v = edges[i][1];
+        
+        adj[u].push_back(v);
+    }
+    
+    //applying topological sort
+    stack<int> st;
+    vector<bool> vis(v,false);
+    for(int i=0;i<v;i++)
+    {
+        if(!vis[i])
+            topoDfs(i,st,vis,adj);
+    }
+    
+    //reversing the edges (transposing)
+    unordered_map <int,list<int>> trans;
+    for(int i=0;i<v;i++)
+    {
+        vis[i]= false;
+        for(auto nbr: adj[i])
+        {
+            trans[nbr].push_back(i);
+        }
+    }
+    
+    //applying dfs on nodes after topo sort
+    int count=0;
+    while(!st.empty())
+    {
+        int top = st.top();
+        st.pop();
+        
+         if(!vis[top])
+         {
+            count++;
+            Dfs(top,vis,trans);
+         }
+    }
+  
+    return count;
+}
