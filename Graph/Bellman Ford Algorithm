@@ -3,8 +3,8 @@
 -> As Dijkstra Algorithm fails for -ve weighted edges therefore bellman ford algorithm is used.
 -> Algorithm: 
   1. Apply  if(dist[u] + w < dist[v]) { dist[v] = dist[u] + w;  }  n-1 times on all edges.
-  2. At last this same formula one more time to check whether the -ve cycle is present or not. If distance of any node gets updated then -ve cycle is present and we 
-     can't find the shortest path, but if no updation in their in distance of any node then we can find the shortest path.
+  2. At last apply this same formula one more time to check whether the -ve cycle is present or not. If distance of any node gets updated then -ve cycle is present and we 
+     can't find the shortest path, but if no updation is their in distance of any node then we can find the shortest path.
 
 
 int bellmonFord(int n, int m, int src, int dest, vector<vector<int>> &edges) {
