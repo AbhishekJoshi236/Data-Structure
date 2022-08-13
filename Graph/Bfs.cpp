@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-//BFS MPLMENTATION FOR BOTH (DIRECTED AND UNDIRECTED)
+//BFS IMPLMENTATION FOR BOTH (DIRECTED AND UNDIRECTED)
 
 void bfs (int node,vector<int> adj[],vector<bool> &vis, queue<int> &q)
 {
