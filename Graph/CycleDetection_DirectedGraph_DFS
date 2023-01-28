@@ -1,0 +1,53 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool dfscycle(int node, vector<bool> &vis,vector<bool> &dfscall, vector<int> adj[]){
+
+    vis[node]=1;
+    dfscall[node]=1;
+
+    for(auto x: adj[node]){
+        if(!vis[x]){
+            if (dfscycle(x,vis,dfscall,adj))
+                return true;
+        }
+        else if(dfscall[x]==true)
+            return true;
+    }
+
+    dfscall[node]=0;
+    return false;
+}
+int main(){
+
+    int v,e;
+    cout<<"V & E: ";
+    cin>>v>>e;
+
+    vector<int> adj[v];
+    cout<<"Edges: ";
+    for(int i=0;i<e;i++){
+        int u,ve;
+        cin>>u>>ve;
+        adj[u].push_back(ve);
+    }
+
+    vector<bool> vis(v,0);
+    vector<bool> dfscall(v,0);
+
+    for(int i=0;i<v;i++){
+
+        if(!vis[i])
+        {
+            if(dfscycle(i,vis,dfscall,adj)){
+                cout<<"YES";
+                return 0;
+            }
+        }
+    }
+
+    
+    cout<<"NO";
+
+    return 0;
+}
