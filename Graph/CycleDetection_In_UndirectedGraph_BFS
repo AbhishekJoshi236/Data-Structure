@@ -44,7 +44,7 @@ int main(){
     
     for(int i=0;i<v;i++){
         if(!vis[i]){
-            if (bfsCycle(0,parent,vis,adj))
+            if (bfsCycle(i,parent,vis,adj))
                 cout<<"YES";
             else
                 cout<<"NO";
