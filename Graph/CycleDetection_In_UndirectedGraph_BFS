@@ -1,0 +1,56 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool bfsCycle(int node, vector<int> &parent, vector<bool> &vis, vector<int> adj[]){
+
+    queue<int> q;
+    vis[node]=1;
+    q.push(node);
+    parent[node]=-1;
+
+    while(!q.empty()){
+
+        int front = q.front();
+        q.pop();
+        for(auto x: adj[front]){
+            if(!vis[x]){
+                vis[x]=1;
+                parent[x]=front;
+                q.push(x);
+            }
+            else if(x != parent[front])
+                return true;
+        }
+    }
+    return false;
+}
+int main(){
+
+    int v,e;
+    cout<<"V and E ";
+    cin>>v>>e;
+    
+    vector<int> adj[v];
+    cout<<"Edges: ";
+    for(int i=0;i<e;i++){
+        int u,ve;
+        cin>>u>>ve;
+        adj[u].push_back(ve);
+        adj[ve].push_back(u);
+    }
+
+    vector<bool> vis(v,0);
+    vector<int> parent(v);
+    
+    for(int i=0;i<v;i++){
+        if(!vis[i]){
+            if (bfsCycle(0,parent,vis,adj))
+                cout<<"YES";
+            else
+                cout<<"NO";
+        }
+    }
+
+    
+    return 0;
+}
