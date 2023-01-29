@@ -1,3 +1,6 @@
+// This sort is only applicable in Directed Acyclic Graph.
+// Observation: If, no sequence is found using this algo, then there is a cycle in graph.
+
 #include<bits/stdc++.h>
 using namespace std;
 
