@@ -1,0 +1,56 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+
+bool cycleBFS(vector<int> &vis,vector<int> indegree,vector<int> adj[],int v){
+
+    queue<int> q;
+    for(int i=0;i<v;i++){
+        if(indegree[i]==0)
+            q.push(i);
+    }
+
+    int count=0;
+    while(!q.empty()){
+
+        int front = q.front();
+        q.pop();
+
+        count++;
+
+        for(auto x: adj[front]){
+            indegree[x]--;
+            if(indegree[x]==0)
+                q.push(x);
+        }
+    }
+
+    if(count==v)
+        return false;
+    return true;
+}
+int main(){
+
+    int v,e;
+    cout<<"V & E: ";
+    cin>>v>>e;
+
+    vector<int> adj[v];
+    vector<int> indegree(v,0);
+    vector<int> vis(v,0);
+
+    cout<<"Egdes: ";
+    for(int i=0;i<e;i++){
+        int u,ve;
+        cin>>u>>ve;
+        adj[u].push_back(ve);
+        indegree[ve]++;
+    }
+
+    if(cycleBFS(vis,indegree,adj,v))
+        cout<<"YES";
+    else   
+        cout<<"NO";
+
+    return 0;
+}
