@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void topologicalsortBFS(vector<bool> &vis,vector<int> &indegree,vector<int> adj[],vector<int> &ans,int &v){
+
+    queue<int> q;
+    //initially inserting elements in queue having 0 indegree.
+    for(int i=0;i<v;i++){
+        if(indegree[i]==0){
+            q.push(i);
+        }
+    }
+
+    while(!q.empty()){
+
+        int front = q.front();
+        q.pop();
+
+        ans.push_back(front);
+
+        for(auto x: adj[front]){
+            indegree[x]--;		// indegree decreases due to popping of vertex.
+            if(indegree[x]==0)
+                q.push(x);
+        }
+    }
+
+}
+int main(){
+
+    int v,e;
+    cout<<"V & E: ";
+    cin>>v>>e;
+
+    vector<int> adj[v];
+    vector<int> indegree(v,0);
+
+    //marking indegree of each vertex
+    cout<<"Edges: ";
+    for(int i=0;i<e;i++){
+        int u,ve;
+        cin>>u>>ve;
+
+        adj[u].push_back(ve);
+        indegree[ve]++;
+    }
+
+    vector<bool> vis(v,0);
+    vector<int> ans;
+
+    topologicalsortBFS(vis,indegree,adj,ans,v);
+    
+
+    cout<<"Order: ";
+    for(auto x: ans){
+        cout<<x<<" ";
+    }
+	
+    return 0;
+}
