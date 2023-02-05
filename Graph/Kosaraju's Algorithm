@@ -1,0 +1,81 @@
+// This algo is used to find out strongly connected component present in the graph.
+
+#include<bits/stdc++.h>
+using namespace std;
+
+void topological(int node, vector<bool> &vis, vector<int> adj[], stack<int> &st){
+    
+    vis[node] = 1;
+
+    for(auto x: adj[node]){
+        if(!vis[x]){
+            topological(x,vis,adj,st);
+        }
+    }
+
+    st.push(node);
+}
+
+void dfs(int node, vector<bool> &vis, vector<int> adj[]){
+
+    vis[node]=true;
+    cout<<node<<" ";
+
+    for(auto x: adj[node] ){
+        if(!vis[x]){
+            dfs(x, vis, adj);
+        }
+    }
+}
+
+int main(){
+
+    int v,e;
+    cout<<"V & E: ";
+    cin>>v>>e;
+
+    vector<int> adj[v];
+    vector<bool> vis(v,0);
+
+    cout<<"Egdes: ";
+    for(int i=0;i<e;i++){
+        int u,ve;
+        cin>>u>>ve;
+        adj[u].push_back(ve);
+    }
+
+    //step-1 Topological ordering
+    stack<int> st;
+
+    for(int i=0;i<v;i++){
+        if(!vis[i]){
+            topological(i,vis,adj,st);
+        }
+    }
+
+    //Step-2 Transpose the graph and make sure to reset the vis array
+    vector<int> transpose[v];
+
+    for(int i=0;i<v;i++){
+        vis[i]=0;
+        for(auto x: adj[i]){
+            transpose[x].push_back(i);
+        }
+    }
+
+    //step-3 Call DFS
+    int count=0;
+    cout<<"\nStrongly Connected Components: \n";
+
+    for(int i=0;i<v;i++){
+        if(!vis[i]){
+            count++;
+            dfs(i,vis,transpose);
+            cout<<endl;
+        }
+    }
+
+    cout<<"\nTotal Strongly Connected Components: "<<count;
+
+    return 0;
+}
