@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+using namespace std;
+// can be applied on directed or undirected graph.
+// directed graph is taken.
+// used to find shortest distance b/w each pair of node.
+// can be used to detect -ve cycle in graph (if present, diagonal elements of matrix will be -ve).
+
+void print(vector<vector<int>> matrix,int v){
+    for(int i=0;i<v;i++){
+        for(int j=0;j<v;j++){
+            cout<<matrix[i][j]<<" ";
+        }cout<<endl;
+    }
+}
+int main(){
+
+    int v,e;
+    cout<<"V & E: ";
+    cin>>v>>e;
+
+    vector<vector<int>> matrix(v,vector<int>(v,INT_MAX));
+    
+    cout<<"Edges with weights:\n";
+    for(int i=0;i<e;i++){
+        int u,ve,w;
+        cin>>u>>ve>>w;
+        matrix[u][ve] = w;
+    }
+
+    for(int i=0;i<v;i++){         // making diagonal elements 0
+        for(int j=0;j<v;j++){
+            if(i==j)
+                matrix[i][j]=0;
+        }
+    }
+
+    for(int k=0;k<v;k++){       //via loop
+
+        for(int i=0;i<v;i++){
+            for(int j=0;j<v;j++){
+                int sum;
+                if(matrix[i][k]==INT_MAX || matrix[k][j]==INT_MAX)
+                    sum=INT_MAX;
+                else 
+                    sum = matrix[i][k] + matrix[k][j];
+
+                matrix[i][j] = min(matrix[i][j],sum);
+            }  
+        }     
+    }    
+
+    //printing
+    cout<<"\n\nEdge   Distance\n";
+    for(int i=0;i<v;i++){
+        for(int j=0;j<v;j++){
+            if(matrix[i][j]==INT_MAX)
+                matrix[i][j]=-1;
+            cout<<i<<"->"<<j<<" : "<<matrix[i][j]<<endl;
+        }cout<<endl;
+    }
+
+    return 0;
+}
