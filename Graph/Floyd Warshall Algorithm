@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 // can be applied on directed or undirected graph.
-// directed graph is taken.
+// directed graph is taken here.
 // used to find shortest distance b/w each pair of node.
 // can be used to detect -ve cycle in graph (if present, diagonal elements of matrix will be -ve).
 
