@@ -1,51 +1,79 @@
--> CODESTUDIO
--> This algorithm is use to find the shortest path b/w sourse and destination node.
--> As Dijkstra Algorithm fails for -ve weighted edges therefore bellman ford algorithm is used.
--> Algorithm: 
-  1. Apply  if(dist[u] + w < dist[v]) { dist[v] = dist[u] + w;  }  n-1 times on all edges.
-  2. At last apply this same formula one more time to check whether the -ve cycle is present or not. If distance of any node gets updated then -ve cycle is present and we 
-     can't find the shortest path, but if no updation is their in distance of any node then we can find the shortest path.
+
+//used to cal the shortest distance from the src node to all nodes in graph.
+//can be applied over directed or undirected(after converting to directed graph) graph.
+//can't be applied over graph having -ve cycle. Hence can used to detect -ve cycle.
+//complexity - O(v-1)*O(e)= O(v*e)
+
+// AlGO :
+    // (n-1) times apply the formula over each edge.
+    // One more time apply the same formula , if there is any change in the distance array then -ve cycle is present and we can't find the shortest distance.
 
 
-int bellmonFord(int n, int m, int src, int dest, vector<vector<int>> &edges) {
-    // Write your code here.
-    
-    vector<int> dist(n+1,1e9);
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+
+    int v,e;
+    cout<<"V & E: ";
+    cin>>v>>e;
+
+    cout<<"Enter edges with weights: \n";
+    vector<vector<int>> edges;
+
+    for(int i=0;i<e;i++){
+        int u,ve,w;
+        cin>>u>>ve>>w;
+
+        vector<int> temp;
+        temp.push_back(u);
+        temp.push_back(ve);
+        temp.push_back(w);
+
+        edges.push_back(temp);
+    }
+
+    vector<int>dist(v,1e9);
+    int src=0;
     dist[src]=0;
-    
-    //checking all edges with the formula for n-1 times.
-    for(int i=0;i<n-1;i++)
-    {
-        for(int j=0;j<m;j++)
-        {
+
+    for(int i=0;i<v-1;i++){     //traversing (n-1) times on all edges
+        
+        for(int j=0;j<e;j++){
+
             int u = edges[j][0];
-            int v = edges[j][1];
+            int ve = edges[j][1];
             int w = edges[j][2];
-            
-            if(dist[u]!=1e9 && (dist[u] + w < dist[v]))
-            {
-                dist[v] = dist[u] + w;
+
+            if(dist[u]!=1e9 && (dist[u] + w < dist[ve])){
+                dist[ve] = dist[u] + w;
             }
         }
     }
-    
-    //checking one more times all edges at last. 
-    int flag=0;
-    for(int j=0;j<m;j++)
-        {
-            int u = edges[j][0];
-            int v = edges[j][1];
-            int w = edges[j][2];
-            
-            if(dist[u]!=1e9 && (dist[u] + w < dist[v]))
-            {
-                dist[v] = dist[u] + w;
-                flag=1;
-            }
+
+    // checking for -ve cycle.
+    bool flag=false;
+    for(int j=0;j<e;j++){
+
+        int u = edges[j][0];
+        int ve = edges[j][1];
+        int w = edges[j][2];
+
+        if(dist[u]!=1e9 && (dist[u] + w < dist[ve])){
+            dist[ve] = dist[u] + w;
+            flag=true;
         }
+    }
+
+    if(flag){
+        cout<<"-VE CYCLE PRESENT.\n";
+    }
+    else{
+        cout<<"\nEdges  Distance\n";
+        for(int i=0;i<v;i++){
+            cout<<src<<"->"<<i<<" : "<<dist[i]<<endl;
+        }
+    }
     
-    if(flag==0)
-        return dist[dest];
-    else
-        return -1;
+    return 0;
 }
